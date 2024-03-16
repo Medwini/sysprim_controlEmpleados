@@ -1,4 +1,7 @@
 <div>
+    <div class="cont_titulo">
+        <h2 class="titulo">Departamentos</h2>
+    </div>
     <div class="container shadow p-3 mb-5 bg-body rounded">
         @foreach($departamentos as $departamento)
             @if ($edit)

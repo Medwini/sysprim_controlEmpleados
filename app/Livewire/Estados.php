@@ -13,11 +13,14 @@ class Estados extends Component
     public $edit = false;
     public $mensaje = "";
     public $valor = "";
+    public $accion = 0;
     public $valor_edit ="";
     public $id_editar = "";
+    public $accion_edit = 0;
 
     protected $rules = [
         "valor" => 'required|min:2|unique:estado_ms,descripcion',
+        "accion" => 'integer|required|min:1|max:4'
     ];
 
     protected $messages = [
@@ -28,7 +31,7 @@ class Estados extends Component
     ];
 
     public function limpiar(){
-        $this->reset(['new','mensaje','valor','valor_edit','id_editar','edit']);
+        $this->reset(['new','mensaje','valor','valor_edit','id_editar','edit','accion']);
     }
 
     public function nuevo(){
@@ -50,7 +53,8 @@ class Estados extends Component
 
         Estado_m::create(
             [
-                "descripcion" => $this->valor
+                "descripcion" => $this->valor,
+                "accion" => $this->accion
             ]
         );
         $this->limpiar();
@@ -60,11 +64,13 @@ class Estados extends Component
     public function editar($id){
         $this->mensaje = "";
         $this->validate([   
-            "valor_edit" => 'required|min:4|unique:estado_ms,descripcion'
+            "valor_edit" => 'required|min:4|unique:estado_ms,descripcion',
+            "accion" => 'integer|required|min:1|max:4'
         ]);
 
         $ConsultaEstado = Estado_m::find($id);
         $ConsultaEstado->descripcion = $this->valor_edit;
+        $ConsultaEstado->accion = $this->edit_edit;
         $ConsultaEstado->save();
         $this->limpiar();
         $this->mensaje = "Estado actualizado exitosamente";

@@ -1,5 +1,9 @@
 <div>
-<div class="container shadow p-3 mb-5 bg-body rounded">
+    <div class="cont_titulo">
+        <h2 class="titulo">Estatus</h2>
+    </div>
+
+    <div class="container shadow p-3 mb-5 bg-body rounded">
         @foreach($estados as $estado)
             @if ($edit)
                 @if ($id_editar == $estado->id)
@@ -24,6 +28,20 @@
                 @error('valor')
                     <p class="error_m">• {{ $message }}</p>
                 @enderror
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">Función:</label>
+                    <select class="form-select" wire:model="accion"  id="inputGroupSelect01">
+                        <option value="0" selected>Seleccione...</option>
+                        <option value="1">Activo</option>
+                        <option value="2">Despedir</option>
+                        <option value="3">Desincorporar</option>
+                        <option value="4">No aplica</option>
+                    </select>
+                </div>
+                @error('accion')
+                    <p class="error_m">• {{ $message }}</p>
+                @enderror
+                
             @else
                 <button wire:click="nuevo">Nuevo</button>
             @endif
@@ -38,6 +56,7 @@
                 <tr>
                 <th scope="col">Id</th>
                 <th scope="col">Descripción</th>
+                <th scope="col">Función</th>
                 <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -46,6 +65,23 @@
                 <tr>
                     <td>{{ $estado->id }}</td>
                     <td>{{ $estado->descripcion }}</td>
+                    @switch ($estado->accion)
+                        @case(1)
+                            <td>Activo</td>
+                        @break
+                        @case(2)
+                            <td>Despedir</td>
+                        @break
+                        @case(3)
+                            <td>Desincorporar</td>
+                        @break
+                        @case(4)
+                            <td>No Aplica</td>
+                        @break
+                        @default
+                            <td>Desconocido</td>
+                        @break
+                    @endswitch
                     <td>
                         <button wire:click="hab_edit({{ $estado->id }})" class="btn btn-primary">Editar</button>
                         <button wire:click="eliminar({{ $estado->id }})" class="btn btn-danger">Eliminar</button>

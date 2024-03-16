@@ -9,3 +9,7 @@ Route::get('/', function () {
 Route::get('/departamentos', function () {
     return view('departamentos');
 });
+
+Route::get('/estados', function () {
+    return view('estados');
+});
