@@ -33,7 +33,7 @@
                     <select class="form-select" wire:model="accion"  id="inputGroupSelect01">
                         <option value="0" selected>Seleccione...</option>
                         <option value="1">Activo</option>
-                        <option value="2">Despedir</option>
+                        <option value="2">Retirar</option>
                         <option value="3">Desincorporar</option>
                         <option value="4">No aplica</option>
                     </select>
@@ -70,7 +70,7 @@
                             <td>Activo</td>
                         @break
                         @case(2)
-                            <td>Despedir</td>
+                            <td>Retirar</td>
                         @break
                         @case(3)
                             <td>Desincorporar</td>

@@ -1,6 +1,6 @@
 <div>
     <div class="cont_titulo">
-        <h2 class="titulo">Empledos</h2>
+        <h2 class="titulo">Empleados</h2>
     </div>
 
     <div class="container shadow p-3 mb-5 bg-body rounded">
@@ -18,7 +18,7 @@
                         </select>
                         <input type="text" wire:model="valor_ci" class="form-control" aria-describedby="addon-wrapping">
                     </div>
-                    @error('valor_cedula')
+                    @error('valor_ci')
                         <p class="error_m">• {{ $message }}</p>
                     @enderror
                     <div class="input-group flex-nowrap my-3">
@@ -29,8 +29,8 @@
                         <p class="error_m">• {{ $message }}</p>
                     @enderror
                     <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">Sexo:</label>
-                        <select class="form-select" wire:model="valor_sexo"  id="inputGroupSelect01">
+                        <label class="input-group-text" for="inputGroupSelect02">Sexo:</label>
+                        <select class="form-select" wire:model="valor_sexo"  id="inputGroupSelect02">
                             <option value="0" selected>Seleccione...</option>
                             @foreach($sexos as $sexo)
                                 <option value="{{$sexo->id}}">{{$sexo->descripcion}}</option>
@@ -50,8 +50,8 @@
                     @enderror
 
                     <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">Departamento:</label>
-                        <select class="form-select" wire:model="valor_departamento"  id="inputGroupSelect01">
+                        <label class="input-group-text" for="inputGroupSelect03">Departamento:</label>
+                        <select class="form-select" wire:model="valor_departamento"  id="inputGroupSelect03">
                             <option value="0" selected>Seleccione...</option>
                             @foreach($departamentos as $departamento)
                                 <option value="{{$departamento->id}}">{{$departamento->descripcion}}</option>
@@ -68,15 +68,75 @@
             @else
                 <button wire:click="nuevo">Nuevo</button>
             @endif
+        
+        @else
+            @foreach($empleados as $empleado)
+                @if ($id_editar == $empleado->id)
+                    <form wire:submit.prevent="editar({{ $empleado->id }})">
+                        @csrf
+                        <div class="input-group flex-nowrap my-3">
+                            <span class="input-group-text" id="addon-wrapping">Nombre:</span>
+                            <input type="text" wire:model="edit_cedula" class="form-control" aria-describedby="addon-wrapping" disabled readonly>
+                        </div>
+                        <div class="input-group flex-nowrap my-3">
+                            <span class="input-group-text" id="addon-wrapping">Nombre:</span>
+                            <input type="text" wire:model="edit_nombre" class="form-control" aria-describedby="addon-wrapping">
+                        </div>
+                        @error('edit_nombre')
+                            <p class="error_m">• {{ $message }}</p>
+                        @enderror
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupSelect02">Sexo:</label>
+                            <select class="form-select" wire:model="edit_sexo"  id="inputGroupSelect02">
+                                <option value="0" selected>Seleccione...</option>
+                                @foreach($sexos as $sexo)
+                                    <option value="{{$sexo->id}}">{{$sexo->descripcion}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('edit_sexo')
+                            <p class="error_m">• {{ $message }}</p>
+                        @enderror
+
+                        <div class="input-group flex-nowrap my-3">
+                            <span class="input-group-text" id="addon-wrapping">Fecha Nacimiento:</span>
+                            <input type="date" wire:model="edit_fecha_nac" class="form-control" aria-describedby="addon-wrapping">
+                        </div>
+                        @error('edit_fecha_nac')
+                            <p class="error_m">• {{ $message }}</p>
+                        @enderror
+
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupSelect03">Departamento:</label>
+                            <select class="form-select" wire:model="edit_departamento"  id="inputGroupSelect03">
+                                <option value="0" selected>Seleccione...</option>
+                                @foreach($departamentos as $departamento)
+                                    <option value="{{$departamento->id}}">{{$departamento->descripcion}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('edit_departamento')
+                            <p class="error_m">• {{ $message }}</p>
+                        @enderror
+
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button wire:click.prevent="limpiar" class="btn btn-warning">Cancelar</button>
+                    </form>
+                @endif
+            @endforeach
         @endif
         <p class="my-3 msg-crud">{{ $mensaje }}</p>
     </div>
 
-    <div class="container">
+    <div class="container grid">
         
         @foreach($empleados as $empleado)
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="{{ asset('img/users.png') }}" alt="Card image cap">
+            <div class="card m-1 p-1" style="width: 20rem;">
+                <div class="d-flex flex-row justify-content-between">
+                    <button wire:click="hab_edit({{ $empleado->id }})" class="btn btn-primary" style="width: 49%;">Editar</button>
+                    <button wire:click="eliminar({{ $empleado->id }})" class="btn btn-danger" style="width: 49%;">Eliminar</button>
+                </div>
+                <img class="card-img-top py-1" src="{{ asset('img/users.png') }}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">
                         @switch ($empleado->sexo) 
@@ -158,23 +218,31 @@
                 </ul>
                 <div class="card-body">
                     @foreach ($estados as $estado)
-                            @switch ($estado->accion) 
-                                @case (1)
-                                    <button type="button" class="btn bg-success text-light my-1">{{ $estado->descripcion }}</button>
-                                @break
-                                @case (2)
-                                    <button type="button" class="btn bg-danger text-light my-1">{{ $estado->descripcion }}</button>
-                                @break
-                                @case (3)
-                                    <button type="button" class="btn bg-warning text-light my-1">{{ $estado->descripcion }}</button>
-                                @break
-                                @case (4)
-                                    <button type="button" class="btn bg-info text-light my-1">{{ $estado->descripcion }}</button>
-                                @break
-                                @default
-                                    <button type="button" class="btn bg-secondary text-light my-1">{{ $estado->descripcion }}</button>
-                                @break
-                            @endswitch
+                        @if ($empleado->estado == $estado->id)
+                            
+                        @else
+                            
+                                @switch ($estado->accion) 
+                                    @case (1)
+                                        <button type="button" class="btn bg-success text-light my-1">{{ $estado->descripcion }}</button>
+                                    @break
+                                    @case (2)
+                                        <button type="button" class="btn bg-danger text-light my-1">{{ $estado->descripcion }}</button>
+                                    @break
+                                    @case (3)
+                                        @if ($edad<=59)
+                                            <button type="button" class="btn bg-warning text-light my-1">{{ $estado->descripcion }}</button>
+                                        @endif
+                                    @break
+                                    @case (4)
+                                        <button type="button" class="btn bg-info text-light my-1">{{ $estado->descripcion }}</button>
+                                    @break
+                                    @default
+                                        <button type="button" class="btn bg-secondary text-light my-1">{{ $estado->descripcion }}</button>
+                                    @break
+                                @endswitch
+
+                        @endif
                     @endforeach
                 </div>
             </div>

@@ -27,8 +27,8 @@ class Empleados extends Component
     public $valor_fecha_nac = "";
     public $valor_estatus = 0;
     public $valor_departamento = 0;
-    public $valor_hora_lleg = "";
-    public $valor_hora_sal = "";
+    public $valor_hora_lleg = "00:00:00";
+    public $valor_hora_sal = "00:00:00";
 
 
     //Variable para editar
@@ -40,14 +40,13 @@ class Empleados extends Component
     public $edit_departamento = 0;
     public $edit_hora_lleg = "";
     public $edit_hora_sal = "";
-    public $edit_id = "";
+    public $id_editar = "";
 
     protected $rules = [
-        "valor_ci" => 'integer|min:6|required|max:12',
+        "valor_ci" => 'integer|min:100000|required|max:9999999999|unique:empleado_ms,cedula',
         "valor_nombre" => 'string|min:3|required',
         "valor_sexo" => 'integer|required|min:1',
-        "valor_fecha_nac" => 'required|date',
-        "valor_estatus" => 'integer|required|min:1',
+        "valor_fecha_nac" => 'required',
         "valor_departamento" => 'integer|required|min:1',
     ];
 
@@ -70,14 +69,78 @@ class Empleados extends Component
         $this->nuev = true;
     }
 
+    public function hab_edit($id){
+        $this->limpiar();
+        $this->edit = true;
+        $this->id_editar = $id;
+        $ConsultaEmpleado = Empleado_m::find($id);
+        $this->edit_cedula = $ConsultaEmpleado->cedula;
+        $this->edit_nombre = $ConsultaEmpleado->nombre;
+        $this->edit_sexo = $ConsultaEmpleado->sexo;
+        $this->edit_fecha_nac = $ConsultaEmpleado->fecha_nac;
+        $this->edit_estatus = $ConsultaEmpleado->estado;
+        $this->edit_departamento = $ConsultaEmpleado->departamento;
+        $this->edit_fecha_nac = $ConsultaEmpleado->fecha_nac;
+        $this->edit_hora_lleg = $ConsultaEmpleado->hora_lleg;
+        $this->edit_hora_sal = $ConsultaEmpleado->hora_sal;
+    }
+
 
     public function a ($fecha_nac){
         $fechaActualCarbon = Carbon::now();
         $fechaNacCarbon = Carbon::parse($fecha_nac);
 
         $this->edad = $fechaActualCarbon->diffInYears($fechaNacCarbon);
-        //$this->edad = $fechaActualCarbon;
+        // $this->edad = 0;
     }    
+
+
+    public function crear(){
+        $this->mensaje = "";
+        $this->valor_cedula = $this->valor_tipo . $this->valor_ci;
+        $this->valor_estatus = 1;
+        $this->validate();
+
+        Empleado_m::create(
+            [
+                "cedula" => $this->valor_cedula,
+                "nombre" => $this->valor_nombre,
+                "sexo" => $this->valor_sexo,
+                "fecha_nac" => $this->valor_fecha_nac,
+                "estado" => $this->valor_estatus,
+                "departamento" => $this->valor_departamento,
+                'hora_lleg' => $this->valor_hora_lleg,
+                'hora_sal' => $this->valor_hora_sal
+            ]
+        );
+        $this->limpiar();
+        $this->mensaje = "Empleado registrado exitosamente";
+    }
+
+    public function editar($id){
+        $this->mensaje = "";
+        $this->validate([   
+            "edit_nombre" => 'string|min:3|required',
+            "edit_sexo" => 'integer|required|min:1',
+            "edit_fecha_nac" => 'required',
+            "edit_departamento" => 'integer|required|min:1',
+        ]);
+
+        $ConsultaEmpleado = Empleado_m::find($id);
+        $ConsultaEmpleado->nombre = $this->edit_nombre;
+        $ConsultaEmpleado->sexo = $this->edit_sexo;
+        $ConsultaEmpleado->fecha_nac = $this->edit_fecha_nac;
+        $ConsultaEmpleado->departamento = $this->edit_departamento;
+        $ConsultaEmpleado->save();
+        $this->limpiar();
+        $this->mensaje = "Empleado actualizado exitosamente";
+    }
+
+    public function eliminar($id){
+        $this->limpiar();
+        Empleado_m::destroy($id);
+        $this->mensaje = "Empleado eliminado exitosamente";
+    }
 
 
     public function render()
@@ -86,16 +149,25 @@ class Empleados extends Component
         $estados = Estado_m::all();
         $sexos = Sexo_m::all();
         $departamentos = Departamento_m::all();
-        $this->fechaActual = Carbon::now()->format('d-m-Y');
 
         return view('livewire.empleados',[
             'empleados' => $empleados,
             'estados' => $estados,
             'sexos' => $sexos,
             'departamentos' => $departamentos,
-            'fechaActual' => $this->fechaActual,
             'edad' => $this->edad,
-            'nuevo' => $this->nuev
+            'nuevo' => $this->nuev,
+            'id_editar' => $this->id_editar,
+            'edit_cedula' => $this->edit_cedula,
+            'edit_nombre' => $this->edit_nombre,
+            'edit_sexo' => $this->edit_sexo,
+            'edit_fecha_nac' => $this->edit_fecha_nac,
+            'edit_estatus' => $this->edit_estatus,
+            'edit_departamento' => $this->edit_departamento,
+            'edit_fecha_nac' => $this->edit_fecha_nac,
+            'edit_hora_lleg' => $this->edit_hora_lleg,
+            'edit_hora_sal' => $this->edit_hora_sal
+
         ]);
     }
 }
