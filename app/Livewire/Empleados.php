@@ -87,12 +87,62 @@ class Empleados extends Component
 
 
     public function a ($fecha_nac){
-        $fechaActualCarbon = Carbon::now();
-        $fechaNacCarbon = Carbon::parse($fecha_nac);
+        // $fechaActualCarbon = Carbon::now();
+        // $fechaNacCarbon = Carbon::parse($fecha_nac);
 
-        $this->edad = $fechaActualCarbon->diffInYears($fechaNacCarbon);
-        // $this->edad = 0;
+        $fechaActualCarbon = Carbon::now()->format('Y-m-d');
+        $fechaNacCarbon = Carbon::parse($fecha_nac)->format('Y-m-d');
+
+        // $this->edad = $fechaActualCarbon->diffInYears($fechaNacCarbon);
+        $this->edad = $fechaNacCarbon;
     }    
+
+    public function cambiarEstado($estado, $id){
+        $this->mensaje = "";
+        $this->id_editar = $id;
+        $ConsultaEmpleado = Empleado_m::find($id);
+        $ConsultaEmpleado->estado = $estado;
+        $ConsultaEmpleado->save();
+        $this->limpiar();
+        $this->mensaje = "Empleado actualizado exitosamente";
+    }
+
+    public function entrada($id){
+        $this->mensaje = "";
+        $ConsultaEmpleado = Empleado_m::find($id);
+        $this->edit_hora_lleg = $ConsultaEmpleado->hora_lleg;
+        $this->edit_hora_sal = $ConsultaEmpleado->hora_sal;
+
+        if ($this->edit_hora_lleg > '00:00:00' && $this->edit_hora_sal > '00:00:00'){
+            $this->edit_hora_sal = "00:00:00";
+            $ConsultaEmpleado->hora_lleg = Carbon::now()->format('H:i:s');
+            $ConsultaEmpleado->hora_sal = $this->edit_hora_sal;
+            $ConsultaEmpleado->save();
+            $this->limpiar();
+            $this->mensaje = "Empleado actualizado exitosamente";
+        }elseif ($this->edit_hora_sal <= '00:00:00') {
+            $this->limpiar();
+            $this->mensaje = "Empleado aún no tiene hora de salida.";
+        }
+    }
+
+    public function salida($id){
+        $this->mensaje = "";
+        $ConsultaEmpleado = Empleado_m::find($id);
+        $this->edit_hora_lleg = $ConsultaEmpleado->hora_lleg;
+        $this->edit_hora_sal = $ConsultaEmpleado->hora_sal;
+
+        if ($this->edit_hora_lleg > '00:00:00' && $this->edit_hora_sal > '00:00:00'){
+            $this->limpiar();
+            $this->mensaje = "Empleado aún no ha ingresado";
+        }else {
+            $ConsultaEmpleado->hora_sal = Carbon::now()->format('H:i:s');
+            $ConsultaEmpleado->hora_lleg = $this->edit_hora_lleg;
+            $ConsultaEmpleado->save();
+            $this->limpiar();
+            $this->mensaje = "Empleado actualizado correctamente";
+        }
+    }
 
 
     public function crear(){

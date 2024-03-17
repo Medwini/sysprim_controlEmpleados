@@ -216,31 +216,38 @@
                     </svg>
                     </li>
                 </ul>
+                @if ($empleado->estado == 1)
+                    <div class="card-body">
+                        <div class="d-flex flex-row justify-content-between">
+                            <button wire:click="entrada({{ $empleado->id }})" class="btn btn-outline-success" style="width: 49%;">Entrada</button>
+                            <button wire:click="salida({{ $empleado->id }})" class="btn btn-outline-info" style="width: 49%;">Salida</button>
+                        </div>
+                    </div>
+                @endif
                 <div class="card-body">
                     @foreach ($estados as $estado)
                         @if ($empleado->estado == $estado->id)
                             
                         @else
-                            
-                                @switch ($estado->accion) 
-                                    @case (1)
-                                        <button type="button" class="btn bg-success text-light my-1">{{ $estado->descripcion }}</button>
-                                    @break
-                                    @case (2)
-                                        <button type="button" class="btn bg-danger text-light my-1">{{ $estado->descripcion }}</button>
-                                    @break
-                                    @case (3)
-                                        @if ($edad<=59)
-                                            <button type="button" class="btn bg-warning text-light my-1">{{ $estado->descripcion }}</button>
-                                        @endif
-                                    @break
-                                    @case (4)
-                                        <button type="button" class="btn bg-info text-light my-1">{{ $estado->descripcion }}</button>
-                                    @break
-                                    @default
-                                        <button type="button" class="btn bg-secondary text-light my-1">{{ $estado->descripcion }}</button>
-                                    @break
-                                @endswitch
+                            @switch ($estado->accion) 
+                                @case (1)
+                                    <button type="button" wire:click="cambiarEstado({{ $estado->id }}, {{ $empleado->id }})" class="btn bg-success text-light my-1">{{ $estado->descripcion }}</button>
+                                @break
+                                @case (2)
+                                    <button type="button" wire:click="cambiarEstado({{ $estado->id }}, {{ $empleado->id }})" class="btn bg-danger text-light my-1">{{ $estado->descripcion }}</button>
+                                @break
+                                @case (3)
+                                    @if ($edad<=59)
+                                        <button type="button" wire:click="cambiarEstado({{ $estado->id }}, {{ $empleado->id }})" class="btn bg-warning text-light my-1">{{ $estado->descripcion }}</button>
+                                    @endif
+                                @break
+                                @case (4)
+                                    <button type="button" wire:click="cambiarEstado({{ $estado->id }}, {{ $empleado->id }})" class="btn bg-info text-light my-1">{{ $estado->descripcion }}</button>
+                                @break
+                                @default
+                                    <button type="button" wire:click="cambiarEstado({{ $estado->id }}, {{ $empleado->id }})" class="btn bg-secondary text-light my-1">{{ $estado->descripcion }}</button>
+                                @break
+                            @endswitch
 
                         @endif
                     @endforeach
