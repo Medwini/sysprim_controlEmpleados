@@ -13,3 +13,8 @@ Route::get('/departamentos', function () {
 Route::get('/estados', function () {
     return view('estados');
 });
+
+Route::get('/sexos', function () {
+    return view('sexos');
+});
+

@@ -12,7 +12,7 @@
             <nav class="cont_inicio">
                 <a href="/" class="btn_inicio">Inicio</a>
                 <a href="/estados" class="btn_inicio">Estados Laborales</a>
-                <a href="#" class="btn_inicio">Sexo</a>
+                <a href="/sexos" class="btn_inicio">Sexos</a>
                 <a href="#" class="btn_inicio">Empleados</a>
             </nav>
         </div>
