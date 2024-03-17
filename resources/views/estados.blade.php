@@ -13,7 +13,7 @@
                 <a href="/" class="btn_inicio">Inicio</a>
                 <a href="/departamentos" class="btn_inicio">Departamentos</a>
                 <a href="/sexos" class="btn_inicio">Sexos</a>
-                <a href="#" class="btn_inicio">Empleados</a>
+                <a href="/empleados" class="btn_inicio">Empleados</a>
             </nav>
         </div>
 

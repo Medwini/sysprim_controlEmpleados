@@ -13,7 +13,7 @@
                 <a href="/" class="btn_inicio">Inicio</a>
                 <a href="/estados" class="btn_inicio">Estados Laborales</a>
                 <a href="/departamentos" class="btn_inicio">Departamentos</a>
-                <a href="#" class="btn_inicio">Empleados</a>
+                <a href="/empleados" class="btn_inicio">Empleados</a>
             </nav>
         </div>
 

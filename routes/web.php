@@ -18,3 +18,7 @@ Route::get('/sexos', function () {
     return view('sexos');
 });
 
+Route::get('/empleados', function () {
+    return view('empleados');
+});
+
