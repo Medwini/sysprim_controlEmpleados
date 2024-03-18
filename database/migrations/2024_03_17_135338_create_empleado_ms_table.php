@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('fecha_nac');
             $table->integer('estado');
             $table->integer('departamento');
+            $table->integer('edad');
             $table->time('hora_lleg');
             $table->time('hora_sal');
             $table->timestamps();

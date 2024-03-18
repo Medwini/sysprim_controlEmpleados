@@ -86,15 +86,14 @@ class Empleados extends Component
     }
 
 
-    public function a ($fecha_nac){
-        // $fechaActualCarbon = Carbon::now();
-        // $fechaNacCarbon = Carbon::parse($fecha_nac);
-
-        $fechaActualCarbon = Carbon::now()->format('Y-m-d');
-        $fechaNacCarbon = Carbon::parse($fecha_nac)->format('Y-m-d');
-
-        // $this->edad = $fechaActualCarbon->diffInYears($fechaNacCarbon);
-        $this->edad = $fechaNacCarbon;
+    public function a ($id){
+        $ConsultaEmpleado = Empleado_m::find($id);
+        $this->fecha_nac = $ConsultaEmpleado->fecha_nac;
+        $fechaActualCarbon = Carbon::now();
+        $fechaNacCarbon = Carbon::parse($this->fecha_nac);
+        $this->edad = floor($fechaNacCarbon->diffInYears($fechaActualCarbon));
+        $ConsultaEmpleado->edad = $this->edad;
+        $ConsultaEmpleado->save();
     }    
 
     public function cambiarEstado($estado, $id){

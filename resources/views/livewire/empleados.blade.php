@@ -193,7 +193,7 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><span>Identificación: </span>{{ $empleado->cedula }}</li>
-                    <li class="list-group-item" wire:init='a({{ $empleado->fecha_nac }})'><span>Edad: </span>{{ $edad }}</li>
+                    <li class="list-group-item" wire:click='a({{ $empleado->id }})'><span>Edad: </span>{{ $edad }}</li>
                     @foreach($departamentos as $departamento)
                         @if ($empleado->departamento == $departamento->id)
                             <li class="list-group-item">{{ $departamento->descripcion }}</li>
