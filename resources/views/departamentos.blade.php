@@ -6,7 +6,7 @@
 
         <div class="">
             <nav class="">
-                <a href="/" class="btn btn-nav me-2 fw-bold">
+                <a href="/" class="btn me-2 fw-bold">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home-up" width="50" height="50" viewBox="0 0 24 24" stroke-width="1.5" stroke="#02a0df" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                         <path d="M9 21v-6a2 2 0 0 1 2 -2h2c.641 0 1.212 .302 1.578 .771" />
@@ -15,9 +15,9 @@
                         <path d="M22 19l-3 -3l-3 3" />
                     </svg>
                 </a>
-                <a href="/estados" class="btn me-2 fw-bold">Estados Laborales</a>
-                <a href="/sexos" class="btn me-2 fw-bold">Sexos</a>
-                <a href="/empleados" class="btn me-2 fw-bold btn_inicio">Empleados</a>
+                <a href="/estados" class="btn btn-nav me-2 fw-bold">Estados Laborales</a>
+                <a href="/sexos" class="btn btn-nav me-2 fw-bold">Sexo</a>
+                <a href="/empleados" class="btn btn-nav me-2 fw-bold">Empleados</a>
             </nav>
         </div>
 

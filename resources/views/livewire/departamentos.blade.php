@@ -28,7 +28,7 @@
                     <p class="error_m">• {{ $message }}</p>
                 @enderror
             @else
-                <button wire:click="nuevo">Nuevo</button>
+                <button wire:click="nuevo" class="btn_nuevo">Nuevo</button>
             @endif
         @endif
         <p class="my-3 msg-crud">{{ $mensaje }}</p>

@@ -44,7 +44,7 @@ class Empleados extends Component
     public $id_editar = "";
 
     protected $rules = [
-        "valor_ci" => 'integer|min:100000|required|max:9999999999|unique:empleado_ms,cedula',
+        "valor_cedula" => 'required|max:9999999999|unique:empleado_ms,cedula',
         "valor_nombre" => 'string|min:3|required',
         "valor_sexo" => 'integer|required|min:1',
         "valor_fecha_nac" => 'required',

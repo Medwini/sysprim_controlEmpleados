@@ -1,6 +1,6 @@
 <div>
 <div class="cont_titulo">
-        <h2 class="titulo">Sexos</h2>
+        <h2 class="titulo">Sexo</h2>
     </div>
     <div class="container shadow p-3 mb-5 bg-body rounded">
         @foreach($sexos as $sexo)
@@ -28,7 +28,7 @@
                     <p class="error_m">• {{ $message }}</p>
                 @enderror
             @else
-                <button wire:click="nuevo">Nuevo</button>
+                <button wire:click="nuevo" class="btn_nuevo">Nuevo</button>
             @endif
         @endif
         <p class="my-3 msg-crud">{{ $mensaje }}</p>

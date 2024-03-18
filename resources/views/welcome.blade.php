@@ -11,9 +11,9 @@
             </div>
             <nav class="cont_inicio">
                 <a href="/estados" class="btn_inicio">Estados Laborales</a>
-                <a href="/sexos" class="btn_inicio">Sexos</a>
-                <a href="/departamentos" class="btn_inicio">Departamentos</a>
+                <a href="/sexos" class="btn_inicio">Sexo</a>
                 <a href="/empleados" class="btn_inicio">Empleados</a>
+                <a href="/departamentos" class="btn_inicio">Departamentos</a>
             </nav>
         </div>
     </div>

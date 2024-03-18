@@ -19,7 +19,7 @@
                         </select>
                         <input type="text" wire:model="valor_ci" class="form-control" aria-describedby="addon-wrapping">
                     </div>
-                    @error('valor_ci')
+                    @error('valor_cedula')
                         <p class="error_m">• {{ $message }}</p>
                     @enderror
                     <div class="input-group flex-nowrap my-3">
@@ -67,7 +67,7 @@
                     <button wire:click.prevent="limpiar" class="btn btn-warning">Cancelar</button>
                 </form>
             @else
-                <button wire:click="nuevo">Nuevo</button>
+                <button wire:click="nuevo" class="btn_nuevo">Nuevo</button>
             @endif
         
         @else
@@ -132,7 +132,7 @@
         @endif
     </div>
 
-    <div class="container grid">
+    <div class="container grid cont-card">
         
         @foreach($empleados as $empleado)
             <div class="card m-1 p-1" style="width: 20rem;">
