@@ -15,6 +15,7 @@
                             <option value="V">V-</option>
                             <option value="E">E-</option>
                             <option value="G">G-</option>
+                            <option value="J">J-</option>
                         </select>
                         <input type="text" wire:model="valor_ci" class="form-control" aria-describedby="addon-wrapping">
                     </div>
@@ -190,15 +191,19 @@
                             </p>
                         @endif
                     @endforeach
+                    @if ($mensajeCard != "")
+                        <p class="my-3 msg-crud" style="color:red;">• {{ $mensajeCard }}</p>
+                    @endif
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><span>Identificación: </span>{{ $empleado->cedula }}</li>
-                    <li class="list-group-item" wire:click='a({{ $empleado->id }})'><span>Edad: </span>{{ $edad }}</li>
+                    <li class="list-group-item" wire:init='valorEdad({{ $empleado->id }})'><span>Edad: </span>{{ $empleado->edad }}</li>
                     @foreach($departamentos as $departamento)
                         @if ($empleado->departamento == $departamento->id)
                             <li class="list-group-item">{{ $departamento->descripcion }}</li>
                         @endif
                     @endforeach
+                    
                     <li class="list-group-item"><span>Activo: </span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -206,8 +211,17 @@
                         <path d="M21 12h-13l3 -3" />
                         <path d="M11 15l-3 -3" />
                     </svg>
-                    {{ $empleado->hora_lleg }} - 
-                    {{ $empleado->hora_sal }}
+                    @if($empleado->hora_lleg > '00:00:00')
+                        <span style="background-color:green;color:white;">{{ $empleado->hora_lleg }}</span>
+                    @else
+                        <span>{{ $empleado->hora_lleg }}</span>
+                    @endif
+                    - 
+                    @if($empleado->hora_sal > '00:00:00')
+                        <span style="background-color:green;color:white;">{{ $empleado->hora_sal }}</span>
+                    @else
+                        <span>{{ $empleado->hora_sal }}</span>
+                    @endif
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                         <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
@@ -237,7 +251,7 @@
                                     <button type="button" wire:click="cambiarEstado({{ $estado->id }}, {{ $empleado->id }})" class="btn bg-danger text-light my-1">{{ $estado->descripcion }}</button>
                                 @break
                                 @case (3)
-                                    @if ($edad<=59)
+                                    @if ($empleado->edad<=59)
                                         <button type="button" wire:click="cambiarEstado({{ $estado->id }}, {{ $empleado->id }})" class="btn bg-warning text-light my-1">{{ $estado->descripcion }}</button>
                                     @endif
                                 @break

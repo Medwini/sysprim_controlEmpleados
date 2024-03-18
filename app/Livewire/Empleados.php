@@ -17,6 +17,7 @@ class Empleados extends Component
     public $nuev = false;
     public $edit = false;
     public $mensaje = "";
+    public $mensajeCard = "";
 
     //Variables para nuevos
     public $valor_tipo = "";
@@ -86,7 +87,7 @@ class Empleados extends Component
     }
 
 
-    public function a ($id){
+    public function valorEdad($id){
         $ConsultaEmpleado = Empleado_m::find($id);
         $this->fecha_nac = $ConsultaEmpleado->fecha_nac;
         $fechaActualCarbon = Carbon::now();
@@ -107,7 +108,7 @@ class Empleados extends Component
     }
 
     public function entrada($id){
-        $this->mensaje = "";
+        $this->mensajeCard = "";
         $ConsultaEmpleado = Empleado_m::find($id);
         $this->edit_hora_lleg = $ConsultaEmpleado->hora_lleg;
         $this->edit_hora_sal = $ConsultaEmpleado->hora_sal;
@@ -118,28 +119,38 @@ class Empleados extends Component
             $ConsultaEmpleado->hora_sal = $this->edit_hora_sal;
             $ConsultaEmpleado->save();
             $this->limpiar();
-            $this->mensaje = "Empleado actualizado exitosamente";
+            $this->mensajeCard = "Empleado actualizado exitosamente";
+        }elseif ($this->edit_hora_lleg <= '00:00:00') {
+            $this->edit_hora_sal = "00:00:00";
+            $ConsultaEmpleado->hora_lleg = Carbon::now()->format('H:i:s');
+            $ConsultaEmpleado->hora_sal = $this->edit_hora_sal;
+            $ConsultaEmpleado->save();
+            $this->limpiar();
+            $this->mensajeCard = "Empleado actualizado exitosamente";
         }elseif ($this->edit_hora_sal <= '00:00:00') {
             $this->limpiar();
-            $this->mensaje = "Empleado aún no tiene hora de salida.";
+            $this->mensajeCard = "Empleado aún no tiene hora de salida.";
         }
     }
 
     public function salida($id){
-        $this->mensaje = "";
+        $this->mensajeCard = "";
         $ConsultaEmpleado = Empleado_m::find($id);
         $this->edit_hora_lleg = $ConsultaEmpleado->hora_lleg;
         $this->edit_hora_sal = $ConsultaEmpleado->hora_sal;
 
         if ($this->edit_hora_lleg > '00:00:00' && $this->edit_hora_sal > '00:00:00'){
             $this->limpiar();
-            $this->mensaje = "Empleado aún no ha ingresado";
+            $this->mensajeCard = "Empleado aún no ha ingresado";
+        }elseif($this->edit_hora_lleg <= '00:00:00'){
+            $this->limpiar();
+            $this->mensajeCard = "Empleado aún no tiene hora de entrada.";
         }else {
             $ConsultaEmpleado->hora_sal = Carbon::now()->format('H:i:s');
             $ConsultaEmpleado->hora_lleg = $this->edit_hora_lleg;
             $ConsultaEmpleado->save();
             $this->limpiar();
-            $this->mensaje = "Empleado actualizado correctamente";
+            $this->mensajeCard = "Empleado actualizado correctamente";
         }
     }
 
@@ -158,6 +169,7 @@ class Empleados extends Component
                 "fecha_nac" => $this->valor_fecha_nac,
                 "estado" => $this->valor_estatus,
                 "departamento" => $this->valor_departamento,
+                'edad' => $this->edad,
                 'hora_lleg' => $this->valor_hora_lleg,
                 'hora_sal' => $this->valor_hora_sal
             ]
@@ -181,6 +193,7 @@ class Empleados extends Component
         $ConsultaEmpleado->fecha_nac = $this->edit_fecha_nac;
         $ConsultaEmpleado->departamento = $this->edit_departamento;
         $ConsultaEmpleado->save();
+        $this->valorEdad($id);
         $this->limpiar();
         $this->mensaje = "Empleado actualizado exitosamente";
     }
