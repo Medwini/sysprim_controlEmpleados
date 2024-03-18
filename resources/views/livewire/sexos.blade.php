@@ -50,8 +50,17 @@
                     <td>{{ $sexo->id }}</td>
                     <td>{{ $sexo->descripcion }}</td>
                     <td>
-                        <button wire:click="hab_edit({{ $sexo->id }})" class="btn btn-primary">Editar</button>
-                        <button wire:click="eliminar({{ $sexo->id }})" class="btn btn-danger">Eliminar</button>
+                        @switch ($sexo->id)
+                            @case(1)        
+                            @break
+                            @case(2)
+                            @break
+                            @default
+                                <button wire:click="hab_edit({{ $sexo->id }})" class="btn btn-primary">Editar</button>
+                                <button wire:click="eliminar({{ $sexo->id }})" class="btn btn-danger">Eliminar</button>
+
+                            @break
+                        @endswitch
                     </td>
                 </tr>
                 @endforeach

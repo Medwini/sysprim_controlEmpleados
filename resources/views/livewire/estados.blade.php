@@ -84,7 +84,7 @@
                     @endswitch
                     <td>
                         <button wire:click="hab_edit({{ $estado->id }})" class="btn btn-primary">Editar</button>
-                        <button wire:click="eliminar({{ $estado->id }})" class="btn btn-danger">Eliminar</button>
+                        <button wire:click="eliminar({{ $estado->id }})" class="btn btn-danger">Eliminar</button>   
                     </td>
                 </tr>
                 @endforeach
