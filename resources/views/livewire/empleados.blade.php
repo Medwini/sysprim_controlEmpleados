@@ -127,6 +127,9 @@
             @endforeach
         @endif
         <p class="my-3 msg-crud">{{ $mensaje }}</p>
+        @if ($mensajeCard != "")
+            <p class="my-3 msg-crud" style="color:red;">• {{ $mensajeCard }}</p>
+        @endif
     </div>
 
     <div class="container grid">
@@ -191,9 +194,6 @@
                             </p>
                         @endif
                     @endforeach
-                    @if ($mensajeCard != "")
-                        <p class="my-3 msg-crud" style="color:red;">• {{ $mensajeCard }}</p>
-                    @endif
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><span>Identificación: </span>{{ $empleado->cedula }}</li>

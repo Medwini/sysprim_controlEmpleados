@@ -20,7 +20,7 @@ class Departamento_mFactory extends Factory
     public function definition(): array
     {
         return [
-            'descripcion' => $this->faker->randomElement(['Sistemas','Administración','Soporte','Producción','Calidad','Contabilidad','Recursos Humanos'])
+            'descripcion' => $this->faker->unique()->randomElement(['Sistemas','Administración','Soporte','Producción','Calidad','Contabilidad','Recursos Humanos'])
         ];
     }
 }
