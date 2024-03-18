@@ -6,7 +6,7 @@
         @foreach($sexos as $sexo)
             @if ($edit)
                 @if ($id_editar == $sexo->id)
-                    <div class="input-group">
+                    <div class="input-group my-1">
                         <input type="text" class="form-control" wire:model="valor_edit" />
                         <button class="btn btn-outline-success" wire:click="editar({{ $sexo->id }})">Guardar</button>
                         <button class="btn btn-outline-secondary" wire:click="limpiar">Cancelar</button>
@@ -19,7 +19,7 @@
         @endforeach
         @if (!$edit)
             @if ($nuevo)
-                <div class="input-group">
+                <div class="input-group my-1">
                     <input type="text" class="form-control" wire:model="valor" />
                     <button class="btn btn-outline-success" wire:click="crear">Guardar</button>
                     <button class="btn btn-outline-secondary" wire:click="limpiar">Cancelar</button>

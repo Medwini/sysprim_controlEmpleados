@@ -65,12 +65,12 @@ class Estados extends Component
         $this->mensaje = "";
         $this->validate([   
             "valor_edit" => 'required|min:4|unique:estado_ms,descripcion',
-            "accion" => 'integer|required|min:1|max:4'
+            "accion_edit" => 'integer|required|min:1|max:4'
         ]);
 
         $ConsultaEstado = Estado_m::find($id);
         $ConsultaEstado->descripcion = $this->valor_edit;
-        $ConsultaEstado->accion = $this->edit_edit;
+        $ConsultaEstado->accion = $this->accion_edit;
         $ConsultaEstado->save();
         $this->limpiar();
         $this->mensaje = "Estado actualizado exitosamente";

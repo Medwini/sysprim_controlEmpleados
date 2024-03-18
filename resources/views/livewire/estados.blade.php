@@ -7,12 +7,26 @@
         @foreach($estados as $estado)
             @if ($edit)
                 @if ($id_editar == $estado->id)
-                    <div class="input-group">
+                    <div class="input-group my-1">
                         <input type="text" class="form-control" wire:model="valor_edit" />
                         <button class="btn btn-outline-success" wire:click="editar({{ $estado->id }})">Guardar</button>
                         <button class="btn btn-outline-secondary" wire:click="limpiar">Cancelar</button>
                     </div>
+                    
                     @error('valor_edit')
+                        <p class="error_m">• {{ $message }}</p>
+                    @enderror
+                    <div class="input-group mb-3 my-1">
+                        <label class="input-group-text" for="inputGroupSelect01">Función:</label>
+                        <select class="form-select" wire:model="accion_edit"  id="inputGroupSelect01">
+                            <option value="0" selected>Seleccione...</option>
+                            <option value="1">Activo</option>
+                            <option value="2">Retirar</option>
+                            <option value="3">Desincorporar</option>
+                            <option value="4">No aplica</option>
+                        </select>
+                    </div>
+                    @error('accion_edit')
                         <p class="error_m">• {{ $message }}</p>
                     @enderror
                 @endif
@@ -20,7 +34,7 @@
         @endforeach
         @if (!$edit)
             @if ($nuevo)
-                <div class="input-group">
+                <div class="input-group my-1">
                     <input type="text" class="form-control" wire:model="valor" />
                     <button class="btn btn-outline-success" wire:click="crear">Guardar</button>
                     <button class="btn btn-outline-secondary" wire:click="limpiar">Cancelar</button>
@@ -28,7 +42,7 @@
                 @error('valor')
                     <p class="error_m">• {{ $message }}</p>
                 @enderror
-                <div class="input-group mb-3">
+                <div class="input-group mb-3 my-1">
                     <label class="input-group-text" for="inputGroupSelect01">Función:</label>
                     <select class="form-select" wire:model="accion"  id="inputGroupSelect01">
                         <option value="0" selected>Seleccione...</option>

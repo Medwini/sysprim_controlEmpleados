@@ -29,7 +29,7 @@
                     @error('valor_nombre')
                         <p class="error_m">• {{ $message }}</p>
                     @enderror
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3 my-1">
                         <label class="input-group-text" for="inputGroupSelect02">Sexo:</label>
                         <select class="form-select" wire:model="valor_sexo"  id="inputGroupSelect02">
                             <option value="0" selected>Seleccione...</option>
@@ -50,7 +50,7 @@
                         <p class="error_m">• {{ $message }}</p>
                     @enderror
 
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3 my-1">
                         <label class="input-group-text" for="inputGroupSelect03">Departamento:</label>
                         <select class="form-select" wire:model="valor_departamento"  id="inputGroupSelect03">
                             <option value="0" selected>Seleccione...</option>
@@ -86,7 +86,7 @@
                         @error('edit_nombre')
                             <p class="error_m">• {{ $message }}</p>
                         @enderror
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3 my-1">
                             <label class="input-group-text" for="inputGroupSelect02">Sexo:</label>
                             <select class="form-select" wire:model="edit_sexo"  id="inputGroupSelect02">
                                 <option value="0" selected>Seleccione...</option>
